@@ -1,0 +1,26 @@
+.infinite-cdt-title {
+  text-align: center;
+}
+.countdown-infinite-item > div {
+  display: flex;
+  text-align: center;
+}
+.countdown-infinite-item .countdowncdt_item-number{
+  font-size: 40px;
+  color: #293e9c;
+  font-weight: 900;
+}
+.countdown-infinite-item .countdowncdt_item-title{
+  display: block;
+  color: grey;
+  font-weight: 400;
+  font-size: 18px;
+  text-transform: capitalize;
+}
+.countdowncdt_item {
+  width: 25%;
+}
+
+.cinfinite-cdt-wrapper .countdown-infinite-item:before {
+  content: "";
+}
