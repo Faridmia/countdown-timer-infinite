@@ -17,7 +17,7 @@ if ( !class_exists( 'Countdown_Cdt_Settings_Field' ) ):
 
         }
 
-        function cdt_countdown_admin_init() {
+        public function cdt_countdown_admin_init() {
 
             //set the settings
             $this->settings_api->set_sections( $this->get_settings_sections() );
@@ -29,7 +29,7 @@ if ( !class_exists( 'Countdown_Cdt_Settings_Field' ) ):
         }
 
         public function cdt_countdown_admin_menu() {
-            add_options_page( 'Countdown Timer Infinite', 'Countdown Timer Infinite', 'delete_posts', 'COUNTDOWNCDT', array( $this, 'countdowncdt_plugin_page' ) );
+            add_options_page( 'Countdown Timer Infinite', 'Countdown Timer Infinite', 'delete_posts', 'countdown_timer_cdt', array( $this, 'countdowncdt_plugin_page' ) );
         }
 
         public function get_settings_sections() {
@@ -72,7 +72,6 @@ if ( !class_exists( 'Countdown_Cdt_Settings_Field' ) ):
                         'label'   => __( 'Date', 'countdown-infinite' ),
                         'desc'    => __( 'Date Select Here', 'countdown-infinite' ),
                         'type'    => 'date',
-                        'default' => '',
                     ),
                     array(
                         'name'              => 'countdown_shortcode',
@@ -129,28 +128,24 @@ if ( !class_exists( 'Countdown_Cdt_Settings_Field' ) ):
                         'label'   => __( 'Background Color', 'countdown-infinite' ),
                         'desc'    => __( 'Wrapper Background Color select', 'countdown-infinite' ),
                         'type'    => 'color',
-                        'default' => '',
                     ),
                     array(
                         'name'    => 'title_color',
                         'label'   => __( 'Heading Color', 'countdown-infinite' ),
                         'desc'    => __( 'Heading Color Select', 'countdown-infinite' ),
                         'type'    => 'color',
-                        'default' => '',
                     ),
                     array(
                         'name'    => 'date_color',
                         'label'   => __( 'Date Color', 'countdown-infinite' ),
                         'desc'    => __( 'Date Color Select', 'countdown-infinite' ),
                         'type'    => 'color',
-                        'default' => '',
                     ),
                     array(
                         'name'    => 'date_title_color',
                         'label'   => __( 'Date Title Color', 'countdown-infinite' ),
                         'desc'    => __( 'Date Title Color Select', 'countdown-infinite' ),
                         'type'    => 'color',
-                        'default' => '',
                     ),
                 ),
             );
@@ -171,7 +166,7 @@ if ( !class_exists( 'Countdown_Cdt_Settings_Field' ) ):
          *
          * @return array page names with key value pairs
          */
-        function get_pages() {
+        public function get_pages() {
             $pages         = get_pages();
             $pages_options = array();
             if ( $pages ) {

@@ -25,7 +25,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
         /**
          * Enqueue scripts and styles
          */
-        function admin_enqueue_scripts()
+        public function admin_enqueue_scripts()
         {
             wp_enqueue_style('wp-color-picker');
             wp_enqueue_style('wp-date-picker');
@@ -41,7 +41,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * @param array   $sections setting sections array
          */
-        function set_sections($sections)
+        public function set_sections($sections)
         {
             $this->settings_sections = $sections;
 
@@ -53,7 +53,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * @param array   $section
          */
-        function add_section($section)
+        public function add_section($section)
         {
             $this->settings_sections[] = $section;
             return $this;
@@ -64,13 +64,13 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * @param array   $fields settings fields array
          */
-        function set_fields($fields)
+        public function set_fields($fields)
         {
             $this->settings_fields = $fields;
             return $this;
         }
 
-        function add_field($section, $field)
+        public function add_field($section, $field)
         {
             $defaults = array(
                 'name'  => '',
@@ -89,11 +89,8 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          * Initialize and registers the settings sections and fileds to WordPress
          *
          * Usually this should be called at `admin_init` hook.
-         *
-         * This function gets the initiated settings sections and fields. Then
-         * registers them to WordPress and ready for use.
          */
-        function admin_init()
+        public function admin_init()
         {
             //register settings sections
 
@@ -106,7 +103,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
                 if (isset($section['desc']) && !empty($section['desc'])) {
                     $section['desc'] = '<div class="inside">' . $section['desc'] . '</div>';
                     $callback        = function () use ($section) {
-                        echo str_replace('"', '\"', $section['desc']);
+                        echo wp_kses_post(str_replace('"', '\"', $section['desc']));
                     };
                 } else if (isset($section['callback'])) {
                     $callback = $section['callback'];
@@ -176,7 +173,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * @param array   $args settings field args
          */
-        function callback_text($args)
+        public function callback_text($args)
         {
 
             $value       = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
@@ -190,7 +187,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
             printf("%s", $html);
         }
 
-        function callback_textarea($args)
+        public function callback_textarea($args)
         {
             $cdt_inf_basics = get_option("cdt_inf_basics");
             $cdt_date       = $cdt_inf_basics['cdt_date'];
@@ -200,7 +197,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
             printf("%s", $html);
         }
 
-        function callback_date($args)
+        public function callback_date($args)
         {
 
             $value       = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
@@ -219,7 +216,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * @param array   $args settings field args
          */
-        function callback_url($args)
+        public function callback_url($args)
         {
             $this->callback_text($args);
         }
@@ -229,7 +226,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * @param array   $args settings field args
          */
-        function callback_checkbox($args)
+        public function callback_checkbox($args)
         {
 
             $value = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
@@ -249,7 +246,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * @param array   $args settings field args
          */
-        function callback_select($args)
+        public function callback_select($args)
         {
 
             $value = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
@@ -272,9 +269,9 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          * @param array   $args settings field args
          * @return string
          */
-        function callback_html($args)
+        public function callback_html($args)
         {
-            echo $this->get_field_description($args);
+            echo wp_kses_post($this->get_field_description($args));
         }
 
         /**
@@ -282,7 +279,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * @param array   $args settings field args
          */
-        function callback_color($args)
+        public function callback_color($args)
         {
 
             $value = esc_attr($this->get_option($args['id'], $args['section'], $args['std']));
@@ -299,7 +296,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * @param array   $args settings field args
          */
-        function callback_pages($args)
+        public function callback_pages($args)
         {
 
             $dropdown_args = array(
@@ -317,7 +314,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * @return mixed
          */
-        function sanitize_options($options)
+        public function sanitize_options($options)
         {
             if (!$options) {
                 return $options;
@@ -343,7 +340,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * @return mixed string or bool false
          */
-        function get_sanitize_callback($slug = '')
+        public function get_sanitize_callback($slug = '')
         {
             if (empty($slug)) {
                 return false;
@@ -371,7 +368,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          * @param string  $default default text if it's not found
          * @return string
          */
-        function get_option($option, $section, $default = '')
+        public function get_option($option, $section, $default = '')
         {
             $options = get_option($section);
 
@@ -387,7 +384,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * Shows all the settings section labels as tab
          */
-        function cdt_show_navigation()
+        public function cdt_show_navigation()
         {
             $html = '<h2 class="nav-tab-wrapper">';
 
@@ -409,12 +406,12 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * This function displays every sections in a different form
          */
-        function cdt_show_forms()
+        public function cdt_show_forms()
         {
 ?>
             <div class="metabox-holder">
                 <?php foreach ($this->settings_sections as $form) { ?>
-                    <div id="<?php echo $form['id']; ?>" class="group" style="display: none;">
+                    <div id="<?php echo esc_attr($form['id']); ?>" class="group" style="display: none;">
                         <form method="post" action="options.php">
                             <?php
                             do_action('wsa_form_top_' . $form['id'], $form);
@@ -439,7 +436,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
          *
          * This code uses localstorage for displaying active tabs
          */
-        function script()
+        public function script()
         {
         ?>
             <script>
@@ -523,7 +520,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
             $this->_style_fix();
         }
 
-        function _style_fix()
+        public function _style_fix()
         {
             global $wp_version;
 

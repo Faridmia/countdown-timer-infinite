@@ -14,13 +14,13 @@ A simple plugin that allows you to add a countdown timer to your website. In onl
 
 === Installation ==
 
-This section explains how to install and activate the plugin.
+You need to activate the plugin in the ways described below.
  
 e.g.
  
 1. Upload `countdown-timer-infinite` folder to the `/wp-content/plugins/` directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Start using it by going to the Settings -> Coundown Timer Infinite
+3. Start using it by going to the Settings > Coundown Timer Infinite
 
 == Frequently Asked Questions ==
 

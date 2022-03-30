@@ -31,7 +31,6 @@ final class CountdownCdt_Infinite_Final {
         add_shortcode( 'countdown_infin', array( $this, 'countdown_cdt_infin_shortcode' ) );
 
         add_filter( 'plugin_action_links_' . COUNTDOWNCDT_PLUGIN_BASE, [$this, 'countdown_cdt_setting_page_link_func'] );
-
     }
 
     /**
@@ -148,16 +147,15 @@ final class CountdownCdt_Infinite_Final {
             $output_heading .= "<h2 class='infinite-cdt-title'>{$attributes['heading_title']}</h2>";
         endif;
         $randid           = rand( 10, 1000 );
-        $shortcode_output = <<<EOD
-		<div class="infinite-cdt-wrapper">
+        $shortcode_output = '';
+        $shortcode_output .= "<div class='infinite-cdt-wrapper'>
 		$output_heading
-			<div class="countdown-infinite-item" data-id="countdown-infinite-item-$randid" data-date="{$attributes['countdown_date']}">
-				<div id="countdown-infinite-item-$randid"></div>
+			<div class='countdown-infinite-item' data-id='countdown-infinite-item-$randid' data-date='{$attributes["countdown_date"]}'>
+				<div id='countdown-infinite-item-$randid'></div>
 			</div>
-		</div>
-	EOD;
+		</div>";
 
-        return $shortcode_output;
+        return wp_kses_post($shortcode_output);
     }
 
     public function countdown_cdt_setting_page_link_func( $links ) {
