@@ -24,13 +24,13 @@ final class CountdownCdt_Infinite_Final {
      */
     private function __construct() {
         // Register  deactive Active Hook
-        register_activation_hook( COUNTDOWNCDT_PLUGIN_ROOT, [$this, 'countdowncdt_activate'] );
-        register_deactivation_hook( COUNTDOWNCDT_PLUGIN_ROOT, [$this, 'countdowncdt_deactivate_hook'] );
+        register_activation_hook( COUNTDOWNCDT_PLUGIN_ROOT, [ $this, 'countdowncdt_activate'] );
+        register_deactivation_hook( COUNTDOWNCDT_PLUGIN_ROOT, [ $this, 'countdowncdt_deactivate_hook'] );
         add_action( 'plugins_loaded', array( $this, 'countdowncdt_init_plugin' ) );
 
         add_shortcode( 'countdown_infin', array( $this, 'countdown_cdt_infin_shortcode' ) );
 
-        add_filter( 'plugin_action_links_' . COUNTDOWNCDT_PLUGIN_BASE, [$this, 'countdown_cdt_setting_page_link_func'] );
+        add_filter( 'plugin_action_links_' . COUNTDOWNCDT_PLUGIN_BASE, [ $this, 'countdown_cdt_setting_page_link_func'] );
     }
 
     /**
@@ -130,11 +130,11 @@ final class CountdownCdt_Infinite_Final {
 
     // countdown shortcode func
 
-    public function countdown_cdt_infin_shortcode( $arguments, $content = '' ) {
+    public function countdown_cdt_infin_shortcode( $arguments,$content = null ) {
 
         $cdt_inf_basics  = get_option( "cdt_inf_basics" );
         $cdt_heading     = $cdt_inf_basics['countdown_heading'];
-        $heading_off_off = $cdt_inf_basics['heading_off_off'];
+        $heading_on_off  = $cdt_inf_basics['heading_on_off'];
 
         $defaults = array(
             'heading_title'  => $cdt_heading,
@@ -143,19 +143,19 @@ final class CountdownCdt_Infinite_Final {
 
         $attributes     = shortcode_atts( $defaults, $arguments );
         $output_heading = '';
-        if ( $heading_off_off == 'on' ):
+        if ( $heading_on_off == 'on' ):
             $output_heading .= "<h2 class='infinite-cdt-title'>{$attributes['heading_title']}</h2>";
         endif;
         $randid           = rand( 10, 1000 );
         $shortcode_output = '';
         $shortcode_output .= "<div class='infinite-cdt-wrapper'>
-		$output_heading
-			<div class='countdown-infinite-item' data-id='countdown-infinite-item-$randid' data-date='{$attributes["countdown_date"]}'>
-				<div id='countdown-infinite-item-$randid'></div>
+		".wp_kses_post($output_heading)."
+			<div class='countdown-infinite-item' data-id='countdown-infinite-item-".esc_attr($randid)."' data-date='".esc_attr($attributes["countdown_date"])."'>
+				<div id='countdown-infinite-item-".esc_attr($randid)."'></div>
 			</div>
 		</div>";
 
-        return wp_kses_post($shortcode_output);
+        return $shortcode_output;
     }
 
     public function countdown_cdt_setting_page_link_func( $links ) {

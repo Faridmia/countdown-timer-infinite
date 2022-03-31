@@ -103,7 +103,7 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
                 if (isset($section['desc']) && !empty($section['desc'])) {
                     $section['desc'] = '<div class="inside">' . $section['desc'] . '</div>';
                     $callback        = function () use ($section) {
-                        echo wp_kses_post(str_replace('"', '\"', $section['desc']));
+                        echo wp_kses_post($section['desc']);
                     };
                 } else if (isset($section['callback'])) {
                     $callback = $section['callback'];
@@ -409,18 +409,19 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
         public function cdt_show_forms()
         {
 ?>
-            <div class="metabox-holder">
-                <?php foreach ($this->settings_sections as $form) { ?>
-                    <div id="<?php echo esc_attr($form['id']); ?>" class="group" style="display: none;">
+            <div class="metabox-holder countdown-timer-metabox-holder">
+                <?php foreach ($this->settings_sections as $form) { 
+                    ?>
+                    <div id="<?php echo esc_attr($form['id']); ?>" class="group countdown-timer-inf">
                         <form method="post" action="options.php">
                             <?php
-                            do_action('wsa_form_top_' . $form['id'], $form);
-                            settings_fields($form['id']);
-                            do_settings_sections($form['id']);
-                            do_action('wsa_form_bottom_' . $form['id'], $form);
+                            do_action('wsa_form_top_' . esc_attr($form['id']), $form);
+                            settings_fields(wp_kses_post($form['id']));
+                            do_settings_sections(wp_kses_post($form['id']));
+                            do_action('wsa_form_bottom_' . esc_attr($form['id']), $form);
                             if (isset($this->settings_fields[$form['id']])) :
                             ?>
-                                <div style="padding-left: 10px">
+                                <div class="inf-coutdown">
                                     <?php submit_button(); ?>
                                 </div>
                             <?php endif; ?>
@@ -517,28 +518,9 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
                 });
             </script>
             <?php
-            $this->_style_fix();
-        }
-
-        public function _style_fix()
-        {
-            global $wp_version;
-
-            if (version_compare($wp_version, '3.8', '<=')) :
-            ?>
-                <style type="text/css">
-                    /** WordPress 3.8 Fix **/
-                    .form-table th {
-                        padding: 20px 10px;
-                    }
-
-                    #wpbody-content .metabox-holder {
-                        padding-top: 5px;
-                    }
-                </style>
-<?php
-            endif;
         }
     }
 
 endif;
+
+

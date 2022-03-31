@@ -3,7 +3,14 @@ class Countdown_Cdt_Enqueue {
 
     public function __construct()
     {
+        add_action('admin_enqueue_scripts', array($this, 'countdowncdt_admin_enqscripts'));
         add_action('wp_enqueue_scripts', array($this, 'countdowncdt_enqueue_scripts'));
+
+    }
+
+    public function countdowncdt_admin_enqscripts() {
+
+        wp_enqueue_style('countdown-admin-css', COUNTDOWNCDT_CORE_ASSETS . 'assets/admin/css/admin-countdown.css', '', COUNTDOWNCDT_VERSION,false );
 
     }
 
