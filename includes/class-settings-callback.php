@@ -190,9 +190,8 @@ if (!class_exists('Countdown_Cdt_Setting_Api')) :
         public function callback_textarea($args)
         {
             $cdt_inf_basics = get_option("cdt_inf_basics");
-            $cdt_date       = $cdt_inf_basics['cdt_date'];
 
-            $html = sprintf('<textarea  cols="45" rows="5" id="" name="">[countdown_infin countdown_date="' . esc_attr($cdt_date) . '"]</textarea>');
+            $html = sprintf('<textarea  cols="45" rows="5" id="" name="">[wpinf-countdown id="1"]</textarea>');
             $html .= $this->get_field_description($args);
             printf("%s", $html);
         }

@@ -12,6 +12,18 @@ License URI: http://www.gnu.org/licenses/gpl-2.0.html
 == Description ==
 A simple plugin that allows you to add a countdown timer to your website. In only a few minutes, you can design a beautiful and practical Countdown timer. This is the most effective technique to provide your users with a gorgeous Countdown. You can incorporate our Countdown timer into your articles and pages.
 
+= Plugins shortcode with all parameters: =
+`
+[wpinf-countdown id="1"]
+`
+
+* **Shortcode:** [wpinf-countdown id="1"] **-timer shortcode use for which you want to display timer. This parameter is required-**
+
+= Template shortcode is =
+
+`
+<?php echo do_shortcode('[wpinf-countdown id="1"]'); ?>
+`
 === Installation ==
 
 You need to activate the plugin in the ways described below.
@@ -22,13 +34,13 @@ e.g.
 2. Activate the plugin through the 'Plugins' menu in WordPress
 3. Start using it by going to the Settings > Coundown Timer Infinite
 
-== Frequently Asked Questions ==
-
 = 1.0.0 =
 *Initail Release
 
 == Screenshots ==
-
+1. The Setting page view screenshot-1.png
+2. The Setting page view screenshot-2.png
+3. The front page view screenshot-3.png
 
 == Changelog ==
 

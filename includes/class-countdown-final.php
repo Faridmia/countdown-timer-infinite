@@ -142,6 +142,12 @@ final class CountdownCdt_Infinite_Final {
         );
 
         $attributes     = shortcode_atts( $defaults, $arguments );
+
+        if(!empty($cdt_date)) {
+            $cdt_date        = $cdt_inf_basics['cdt_date'];
+        } else {
+            $cdt_date = $attributes['countdown_date'];
+        }
         $output_heading = '';
         if ( $heading_on_off == 'on' ):
             $output_heading .= "<h2 class='infinite-cdt-title'>{$attributes['heading_title']}</h2>";
@@ -150,7 +156,7 @@ final class CountdownCdt_Infinite_Final {
         $shortcode_output = '';
         $shortcode_output .= "<div class='infinite-cdt-wrapper'>
 		".wp_kses_post($output_heading)."
-			<div class='countdown-infinite-item' data-id='countdown-infinite-item-".esc_attr($randid)."' data-date='".esc_attr($attributes["countdown_date"])."'>
+			<div class='countdown-infinite-item' data-id='countdown-infinite-item-".esc_attr($randid)."' data-date='".esc_attr($cdt_date)."'>
 				<div id='countdown-infinite-item-".esc_attr($randid)."'></div>
 			</div>
 		</div>";
