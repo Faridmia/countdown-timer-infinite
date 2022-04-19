@@ -63,6 +63,16 @@ if (!class_exists('Countdown_Cdt_Settings_Field')) :
             $tab_settings_fields = array(
                 'cdt_inf_basics' => array(
                     array(
+                        'name'    => 'layout_style',
+                        'label'   => __( 'Select Layout', 'countdown-infinite' ),
+                        'type'    => 'select',
+                        'default' => 'no',
+                        'options' => array(
+                            '1' => 'One',
+                            '2'  => 'Two'
+                        )
+                    ),
+                    array(
                         'name'    => 'heading_on_off',
                         'label'   => __('Heading ON/OFF', 'countdown-infinite'),
                         'type'    => 'checkbox',
@@ -153,6 +163,30 @@ if (!class_exists('Countdown_Cdt_Settings_Field')) :
                         'name'  => 'date_title_color',
                         'label' => __('Date Title Color', 'countdown-infinite'),
                         'desc'  => __('Date Title Color Select', 'countdown-infinite'),
+                        'type'  => 'color',
+                    ),
+                    array(
+                        'name'  => 'day_bg_color_style_two',
+                        'label' => __('Day BG Color', 'countdown-infinite'),
+                        'desc'  => __('use for style two', 'countdown-infinite'),
+                        'type'  => 'color',
+                    ),
+                    array(
+                        'name'  => 'hour_bg_color_style_two',
+                        'label' => __('Hour BG Color', 'countdown-infinite'),
+                        'desc'  => __('use for style two', 'countdown-infinite'),
+                        'type'  => 'color',
+                    ),
+                    array(
+                        'name'  => 'min_bg_color_style_two',
+                        'label' => __('Minute BG Color', 'countdown-infinite'),
+                        'desc'  => __('use for style two', 'countdown-infinite'),
+                        'type'  => 'color',
+                    ),
+                    array(
+                        'name'  => 'sec_bg_color_style_two',
+                        'label' => __('Seconds BG Color', 'countdown-infinite'),
+                        'desc'  => __('use for style two', 'countdown-infinite'),
                         'type'  => 'color',
                     ),
                 ),

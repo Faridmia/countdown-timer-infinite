@@ -28,7 +28,7 @@ final class CountdownCdt_Infinite_Final {
         register_deactivation_hook( COUNTDOWNCDT_PLUGIN_ROOT, [ $this, 'countdowncdt_deactivate_hook'] );
         add_action( 'plugins_loaded', array( $this, 'countdowncdt_init_plugin' ) );
 
-        add_shortcode( 'countdown_infin', array( $this, 'countdown_cdt_infin_shortcode' ) );
+        add_shortcode( 'wpinf-countdown', array( $this, 'countdown_cdt_infin_shortcode' ) );
 
         add_filter( 'plugin_action_links_' . COUNTDOWNCDT_PLUGIN_BASE, [ $this, 'countdown_cdt_setting_page_link_func'] );
     }
@@ -133,20 +133,26 @@ final class CountdownCdt_Infinite_Final {
     public function countdown_cdt_infin_shortcode( $arguments,$content = null ) {
 
         $cdt_inf_basics  = get_option( "cdt_inf_basics" );
+        $layout_style     = $cdt_inf_basics['layout_style'];
         $cdt_heading     = $cdt_inf_basics['countdown_heading'];
         $heading_on_off  = $cdt_inf_basics['heading_on_off'];
 
         $defaults = array(
             'heading_title'  => $cdt_heading,
-            'countdown_date' => '2022-03-23',
+            'countdown_date' => '06-30-2023',
         );
 
         $attributes     = shortcode_atts( $defaults, $arguments );
-
+        $cdt_date        = $cdt_inf_basics['cdt_date'];
         if(!empty($cdt_date)) {
-            $cdt_date        = $cdt_inf_basics['cdt_date'];
+            $cdt_date2        = $cdt_inf_basics['cdt_date'];
+
+            $timestamp = strtotime($cdt_date2);
+            // Creating new date format from that timestamp
+            $new_date = date("m-d-Y", $timestamp);
+
         } else {
-            $cdt_date = $attributes['countdown_date'];
+            $new_date = $attributes['countdown_date'];
         }
         $output_heading = '';
         if ( $heading_on_off == 'on' ):
@@ -154,12 +160,18 @@ final class CountdownCdt_Infinite_Final {
         endif;
         $randid           = rand( 10, 1000 );
         $shortcode_output = '';
-        $shortcode_output .= "<div class='infinite-cdt-wrapper'>
-		".wp_kses_post($output_heading)."
-			<div class='countdown-infinite-item' data-id='countdown-infinite-item-".esc_attr($randid)."' data-date='".esc_attr($cdt_date)."'>
-				<div id='countdown-infinite-item-".esc_attr($randid)."'></div>
-			</div>
-		</div>";
+        if($layout_style == '1') {
+            $shortcode_output .= "<div class='infinite-cdt-wrapper'>
+            ".wp_kses_post($output_heading)."
+                <div class='countdown-infinite-item' data-id='countdown-infinite-item-".esc_attr($randid)."' data-date='".$new_date."'>
+                    <div id='countdown-infinite-item-".esc_attr($randid)."'></div>
+                </div>
+            </div>";
+        } elseif($layout_style == '2') {
+            $shortcode_output .= "<div class='cdt-inf-banner-text text-center' style='text-align:center;'>
+            <div id='countdown' data-cdtdate='".$new_date."'></div>
+        </div>";
+        }
 
         return $shortcode_output;
     }
