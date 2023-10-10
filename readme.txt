@@ -2,9 +2,9 @@
 Contributors: faridmia
 Tags: countdown, countdown timer, countdown generato, timer countdown, timer, etc
 Requires at least: 4.7.0
-Tested up to: 5.9.2
-Stable tag: 1.0.2
-Requires PHP: 5.6.0
+Tested up to: 6.3
+Stable tag: 1.0.3
+Requires PHP: 7.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -42,6 +42,9 @@ e.g.
 3. The front page view screenshot-3.png
 
 == Changelog ==
+= 1.0.3
+  **Bug Fix
+  2.readme file updated
 = 1.0.2
   **Countdown new layout add
   **Color option add
